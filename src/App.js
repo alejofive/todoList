@@ -7,7 +7,7 @@ const data = [
   { id: 0, tarea: 'trabajo', completado: false, },
   { id: 1, tarea: 'ejercicio', completado: false, },
   { id: 2, tarea: 'tareas', completado: false, },
-  { id: 3, tarea: 'leer', completado: false, },
+  { id: 3, tarea: 'leer', completado: true, },
   { id: 4, tarea: 'practicar futboll', completado: false, },
   { id: 5, tarea: 'jugar', completado: false, }
 ]
@@ -24,7 +24,8 @@ class App extends React.Component {
       tarea: '',
       id: '',
     },
-    posicion: -1
+    posicion: -1,
+    estado: 0
   }
 
   handleChange = e => {
@@ -102,10 +103,21 @@ class App extends React.Component {
     this.setState({ data: dataNueva, posicion: -1 })
   }
 
-  cambiar = (completado) => {
-    this.setState({ completado: !completado })
-    console.log(completado)
-  }
+  cambiar = (id) => {
+    this.setState({
+      data: [
+        ...this.state.data.map((item) => {
+          if (id == item.id) {
+            return {
+              ...item,
+              completado: !item.completado
+            };
+          }
+          return item;
+        })
+      ]
+    });
+  };
 
 
   render() {
@@ -118,34 +130,49 @@ class App extends React.Component {
 
           <div>
             {this.state.data.map((elemento) => {
-              if (elemento.id != this.state.posicion) {
-                return (
-                  <div className='caja-list'>
-                    <div className='list'>
-                      <input onChange={() => this.cambiar()} type="checkbox" />
-                      <p className='list-tarea'>{elemento.tarea}</p>
+              if (estado == 1 & elemento.completado != false) {
+                return null
+
+
+              } else if (estado == 1 & elemento.completado != true) {
+                return null
+                if (elemento.id != this.state.posicion) {
+                  return (
+                    <div key={elemento.id} className={` ${elemento.completado ? 'completado' : ''} caja-list `} >
+                      <div className='hola'>
+                        <input onChange={() => this.cambiar(elemento.id)} type="checkbox" checked={elemento.completado} />
+                        <p className="list-tarea">{elemento.tarea}</p>
+                      </div>
+                      <div className="botones">
+                        <button className="edit" onClick={() => this.editar(elemento)}>
+                          <FaEdit />
+                        </button>
+                        <button className="eliminar" onClick={() => this.eliminar(elemento)}>
+                          x
+                        </button>
+                      </div>
                     </div>
-                    <div className='botones'>
-                      <button className='edit' onClick={() => this.editar(elemento)}><FaEdit /></button>
-                      <button className='eliminar' onClick={() => this.eliminar(elemento)} >x</button>
+                  );
+                } else {
+                  return (<div className='caja-list caja-list-edit'>
+                    <input type="text" placeholder='' name='tarea' value={this.state.formEditar.tarea} onChange={(e) => this.handlEdit(e)} />
+                    <div className='botones-edit'>
+                      <button className='Aceptar' onClick={() => this.aceptar()} >Aceptar</button>
+                      <button onClick={() => this.cancelar()} className='Cancelar'>Cancelar</button>
                     </div>
-                  </div>
-                )
-              } else {
-                return (<div className='caja-list caja-list-edit'>
-                  <input type="text" placeholder='' name='tarea' value={this.state.formEditar.tarea} onChange={(e) => this.handlEdit(e)} />
-                  <div className='botones-edit'>
-                    <button className='Aceptar' onClick={() => this.aceptar()} >Aceptar</button>
-                    <button onClick={() => this.cancelar()} className='Cancelar'>Cancelar</button>
-                  </div>
-                </div>)
+                  </div>)
+                }
               }
             }
             )}
           </div>
 
 
-
+          <form action="" className='seleccionar'>
+            <button>todos</button>
+            <button>sin completar</button>
+            <button>completadas</button>
+          </form>
           <form className="agregar" onSubmit={this.insertar}>
             <input type="text" name="tarea" onChange={this.handleChange} placeholder="Ingrese un tarea" value={this.state.form.tarea} />
             <button type="submit">Submit</button>
@@ -159,3 +186,4 @@ class App extends React.Component {
 }
 
 export default App;
+

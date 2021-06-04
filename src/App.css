@@ -126,3 +126,26 @@ button{
   background: gray;
 }
 
+.completado{
+  background: #105010;
+}
+
+.hola{
+  display: flex;
+  align-items: center;
+}
+.hola input{
+  margin-right: 10px;
+}
+
+.seleccionar{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+
+.seleccionar button{
+  padding: 10px 20px ;
+  border-radius: 5px;
+}
+
