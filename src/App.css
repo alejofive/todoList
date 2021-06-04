@@ -5,6 +5,10 @@
 
 }
 
+button{
+  cursor: pointer;
+}
+
 .center{
   display: flex;
   justify-content: center;
@@ -32,6 +36,14 @@
   border-bottom:1px solid gray ;
 }
 
+.edit{
+  background: blue !important;
+}
+
+.eliminar{
+  background: gray;
+}
+
 .caja-list button{
   width: 30px;
   height: 30px;
@@ -40,7 +52,6 @@
   justify-content: center;
   border-radius: 100px;
   border: none;
-  background: gray;
   color: white;
   font-size: 20px;
 }
@@ -69,4 +80,41 @@
 .agregar button{
   padding: 10px 30px;
   border-radius: 5px;
+
 }
+
+.botones{
+  display: flex;
+
+}
+
+.botones button{
+  margin-left: 5px;
+}
+
+
+.caja-list-edit input{
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.botones-edit{
+  display: flex;
+  justify-content: end;
+}
+
+.botones-edit button{
+  margin-left: 5px;
+  border-radius: none !important;
+  width: 100px;
+}
+
+.Aceptar{
+  background: blue;
+}
+
+.Cancelar{
+  background: gray;
+}
+
