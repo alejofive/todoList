@@ -36,6 +36,14 @@ button{
   border-bottom:1px solid gray ;
 }
 
+.list{
+  display: flex;
+  align-items: center;
+}
+.list input{
+  margin-right: 10px;
+}
+
 .edit{
   background: blue !important;
 }

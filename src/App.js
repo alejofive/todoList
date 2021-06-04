@@ -4,23 +4,24 @@ import { FaEdit } from 'react-icons/fa';
 
 
 const data = [
-  { id: 0, Nombre: 'Alejandro', },
-  { id: 1, Nombre: 'Maria', },
-  { id: 2, Nombre: 'Pedro', },
-  { id: 3, Nombre: 'Luis', },
-  { id: 4, Nombre: 'Julio', },
-  { id: 5, Nombre: 'Sidney', }
+  { id: 0, tarea: 'trabajo', completado: false, },
+  { id: 1, tarea: 'ejercicio', completado: false, },
+  { id: 2, tarea: 'tareas', completado: false, },
+  { id: 3, tarea: 'leer', completado: false, },
+  { id: 4, tarea: 'practicar futboll', completado: false, },
+  { id: 5, tarea: 'jugar', completado: false, }
 ]
 
 class App extends React.Component {
   state = {
     data: data,
     form: {
-      Nombre: '',
+      tarea: '',
       id: '',
+      completado: false,
     },
     formEditar: {
-      Nombre: '',
+      tarea: '',
       id: '',
     },
     posicion: -1
@@ -37,7 +38,7 @@ class App extends React.Component {
 
   insertar = (e) => {
     e.preventDefault();
-    if (this.state.form.Nombre.length == '') {
+    if (this.state.form.tarea.length == '') {
       alert('no puede ir vacio');
       return;
     }
@@ -45,19 +46,19 @@ class App extends React.Component {
     var lista = this.state.data;
     lista.push(valorNuevo);
     this.setState({ data: lista });
-    this.setState({ form: { Nombre: '' } });
+    this.setState({ form: { tarea: '' } });
 
   };
 
 
 
   eliminar = (dato) => {
-    var opcion = window.confirm('realmente desea Eliminar ' + dato.Nombre);
+    var opcion = window.confirm('realmente desea Eliminar ' + dato.tarea);
     if (opcion) {
       var contador = 0;
       var lista = this.state.data;
       lista.map((registro) => {
-        if (registro.Nombre == dato.Nombre) {
+        if (registro.tarea == dato.tarea) {
           lista.splice(contador, 1);
         }
         contador++
@@ -92,13 +93,18 @@ class App extends React.Component {
         if (elemento.id == this.state.posicion) {
           return {
             id: elemento.id,
-            Nombre: this.state.formEditar.Nombre
+            tarea: this.state.formEditar.tarea
           }
         }
         return elemento
       })
     ]
-    this.setState({ data: dataNueva })
+    this.setState({ data: dataNueva, posicion: -1 })
+  }
+
+  cambiar = (completado) => {
+    this.setState({ completado: !completado })
+    console.log(completado)
   }
 
 
@@ -107,7 +113,7 @@ class App extends React.Component {
       <div className='center'>
         <section className='caja-big'>
           <div className='title'>
-            <h1>Personas</h1>
+            <h1>Tareas</h1>
           </div>
 
           <div>
@@ -115,7 +121,10 @@ class App extends React.Component {
               if (elemento.id != this.state.posicion) {
                 return (
                   <div className='caja-list'>
-                    <p className='list-nombre'>{elemento.Nombre}</p>
+                    <div className='list'>
+                      <input onChange={() => this.cambiar()} type="checkbox" />
+                      <p className='list-tarea'>{elemento.tarea}</p>
+                    </div>
                     <div className='botones'>
                       <button className='edit' onClick={() => this.editar(elemento)}><FaEdit /></button>
                       <button className='eliminar' onClick={() => this.eliminar(elemento)} >x</button>
@@ -124,7 +133,7 @@ class App extends React.Component {
                 )
               } else {
                 return (<div className='caja-list caja-list-edit'>
-                  <input type="text" placeholder='' name='Nombre' value={this.state.formEditar.Nombre} onChange={(e) => this.handlEdit(e)} />
+                  <input type="text" placeholder='' name='tarea' value={this.state.formEditar.tarea} onChange={(e) => this.handlEdit(e)} />
                   <div className='botones-edit'>
                     <button className='Aceptar' onClick={() => this.aceptar()} >Aceptar</button>
                     <button onClick={() => this.cancelar()} className='Cancelar'>Cancelar</button>
@@ -138,7 +147,7 @@ class App extends React.Component {
 
 
           <form className="agregar" onSubmit={this.insertar}>
-            <input type="text" name="Nombre" onChange={this.handleChange} placeholder="Ingrese un Nombre" value={this.state.form.Nombre} />
+            <input type="text" name="tarea" onChange={this.handleChange} placeholder="Ingrese un tarea" value={this.state.form.tarea} />
             <button type="submit">Submit</button>
           </form>
 
