@@ -1,6 +1,7 @@
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import './App.css'
+import { CreateTask, Task, Typography } from './components'
+import { LayoutIndex } from './layouts'
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -59,46 +60,34 @@ function App() {
   }
 
   return (
-    <>
-      <div className='w-full flex justify-center h-screen items-center bg-slate-100 shadow-md'>
-        <div className='w-[300px] bg-white rounded-md'>
-          <div className='bg-blue-800 rounded-t-md p-3'>
-            <h1 className='text-3xl text-white tex'>Todo List</h1>
-          </div>
-          <section className='p-8 bg-white'>
-            <input className='px-3 py-2 w-full border border-gray-400' type='text' placeholder='Search' value={search} onChange={searcher} />
+    <LayoutIndex>
+      <section className='p-8 bg-white'>
+        <input className='px-3 py-2 w-full border border-gray-400' type='text' placeholder='Search' value={search} onChange={searcher} />
 
-            <div className='mt-5 '>
-              {tasksFiltered().map(task => (
-                <div key={task.id} className='border border-gray-400 flex justify-between items-center p-3'>
-                  <div className='flex items-center'>
-                    <input className='mr-4' type='checkbox' name='' id='' checked={task.completed} onChange={() => changeCompleted(task.id)} />
-                    <p className='font-bold'>{task.name}</p>
-                  </div>
-                  <button onClick={() => deleteTask(task.id)} className='w-6 flex justify-end'>
-                    <TrashIcon className='w-4 h-4 text-red-600' />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <button onClick={() => deleteAll()} className='mt-5 bg-slate-900 text-white font-semibold px-4 py-2 rounded'>
-              Clear Completed
-            </button>
-          </section>
-
-          <form onSubmit={taskSave} action='' className='bg-gray-200 rounded-b-md p-5'>
-            <div className='bg-blue-800 flex items-center'>
-              <input className='px-3 py-1' type='text' placeholder='Add' onChange={handleInput} value={newtask.name} required />
-              <button type='submit' className='flex items-center'>
-                <PlusIcon className='w-5 h-5 text-white font-semibold' />
-                <p className='text-white'>Add</p>
-              </button>
-            </div>
-          </form>
+        <div className='mt-5 '>
+          {tasksFiltered().map(task => (
+            <Task key={task.id} task={task} changeCompleted={changeCompleted} deleteTask={deleteTask} />
+          ))}
         </div>
-      </div>
-    </>
+        <Typography type='title'>Luis</Typography>
+        <Typography type='subtitle'>Luis</Typography>
+        <Typography type='caption'>Luis</Typography>
+        <Typography type='title'>Luis</Typography>
+        <Typography type='subtitle'>Luis</Typography>
+        <Typography type='caption'>Luis</Typography>
+        <Typography type='title'>Luis</Typography>
+        <Typography type='subtitle'>Luis</Typography>
+        <Typography type='caption'>Luis</Typography>
+        <Typography type='title'>Luis</Typography>
+        <Typography type='subtitle'>Luis</Typography>
+        <Typography type='caption'>Luis</Typography>
+
+        <button onClick={() => deleteAll()} className='mt-5 bg-slate-900 text-white font-semibold px-4 py-2 rounded'>
+          Clear Completed
+        </button>
+      </section>
+      <CreateTask handleInput={handleInput} newtask={newtask} taskSave={taskSave} />
+    </LayoutIndex>
   )
 }
 
