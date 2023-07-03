@@ -1,0 +1,9 @@
+{
+  "tasks": [
+    { "id": 1, "name": "Comprar víveres", "completed": false },
+    { "id": 2, "name": "Hacer ejercicio", "completed": true },
+    { "id": 3, "name": "Llamar al doctor", "completed": false },
+    { "id": 4, "name": "Terminar el informe", "completed": false },
+    { "id": 5, "name": "Limpiar la casa", "completed": true }
+  ]
+}

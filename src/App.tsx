@@ -1,16 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { CreateTask, Task, Typography } from './components'
+import { CreateTask, Task } from './components'
+import { ITask } from './interfaces'
 import { LayoutIndex } from './layouts'
+import taskService from './services/tasks'
 
 function App() {
-  const [tasks, setTasks] = useState([
-    { id: 1, name: 'Comprar víveres', completed: false },
-    { id: 2, name: 'Hacer ejercicio', completed: true },
-    { id: 3, name: 'Llamar al doctor', completed: false },
-    { id: 4, name: 'Terminar el informe', completed: false },
-    { id: 5, name: 'Limpiar la casa', completed: true },
-  ])
+  const [tasks, setTasks] = useState<ITask[]>([])
 
   const [newtask, setNewtask] = useState({
     id: 6,
@@ -59,6 +55,18 @@ function App() {
     setTasks([...tasks.filter(task => task.id !== id)])
   }
 
+  const getTasks = async () => {
+    const res = await taskService.getAll()
+    if (res.data) {
+      setTasks(res.data)
+    } else {
+      alert('Error al cargar data')
+    }
+  }
+  useEffect(() => {
+    getTasks()
+  }, [])
+
   return (
     <LayoutIndex>
       <section className='p-8 bg-white'>
@@ -69,18 +77,6 @@ function App() {
             <Task key={task.id} task={task} changeCompleted={changeCompleted} deleteTask={deleteTask} />
           ))}
         </div>
-        <Typography type='title'>Luis</Typography>
-        <Typography type='subtitle'>Luis</Typography>
-        <Typography type='caption'>Luis</Typography>
-        <Typography type='title'>Luis</Typography>
-        <Typography type='subtitle'>Luis</Typography>
-        <Typography type='caption'>Luis</Typography>
-        <Typography type='title'>Luis</Typography>
-        <Typography type='subtitle'>Luis</Typography>
-        <Typography type='caption'>Luis</Typography>
-        <Typography type='title'>Luis</Typography>
-        <Typography type='subtitle'>Luis</Typography>
-        <Typography type='caption'>Luis</Typography>
 
         <button onClick={() => deleteAll()} className='mt-5 bg-slate-900 text-white font-semibold px-4 py-2 rounded'>
           Clear Completed
